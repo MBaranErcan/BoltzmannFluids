@@ -2,3 +2,4 @@
 *.user
 *.filters
 *.dll
+/Source/GUI/build
