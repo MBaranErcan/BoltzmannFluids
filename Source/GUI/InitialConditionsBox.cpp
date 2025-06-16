@@ -4,23 +4,24 @@
 #include <QLabel>
 #include <QSpinBox>
 #include <QCheckBox>
-
+#include <QGroupBox>
 #include <QToolButton>
 #include <QIcon>
 #include <QStyle>
 #include <QPixmap>
 #include <QFrame>
-
+#include <QVBoxLayout>
 #include <QScrollBar>
 
 InitialConditionsBox::InitialConditionsBox(QWidget* parent)
     : QFrame(parent)
 {
-    main_layout = new QVBoxLayout(this);
+    auto main_layout = new QVBoxLayout(this);
     main_layout->setAlignment(Qt::AlignTop);
     main_layout->addWidget(createInitialConditionsGroup());
     main_layout->setContentsMargins(0,0,0,0);
     main_layout->setSpacing(0);
+    setLayout(main_layout);
 
     setStyleSheet(
     "InitialConditionsBox {"

@@ -1,6 +1,11 @@
 #ifndef UI_CONFIG_H
 #define UI_CONFIG_H
 
+#define CONFIG_INCLUDE_LIMITS
+#ifdef CONFIG_INCLUDE_LIMITS
+#include <limits>
+#endif
+
 namespace {
     constexpr unsigned int constexpr_max(unsigned int a, unsigned int b) {
         return (a > b) ? a : b;
@@ -19,6 +24,7 @@ constexpr unsigned int render_box_height            = 500;
 constexpr unsigned int timeline_height              = 80;
 constexpr unsigned int application_output_height    = 150;
 
+// Initial Conditions
 constexpr float GRAVITY_MIN = -100.f;
 constexpr float GRAVITY_MAX =  100.f;
 
@@ -27,5 +33,9 @@ constexpr float INITIAL_VELOCITY_MAX =  100.f;
 
 constexpr float INITIAL_TEMPRATURE_MIN =  -273.15f;
 constexpr float INITIAL_TEMPRATURE_MAX =   10000.f;
+
+// Item Properties
+constexpr float POSITION_MIN = std::numeric_limits<float>::lowest();
+constexpr float POSITION_MAX = std::numeric_limits<float>::max();
 
 #endif // UI_CONFIG_H

@@ -22,6 +22,7 @@ public:
     ~MainWindow();
 
     void update_timeline(int current_frame);
+    Timeline* timeline;
 
 private slots:
 
@@ -29,8 +30,6 @@ private slots:
 
 
 private:
-
-    Timeline* timeline;
 
     Ui::MainWindow *ui;
 

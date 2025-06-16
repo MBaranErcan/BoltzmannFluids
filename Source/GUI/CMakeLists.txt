@@ -15,8 +15,8 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets OpenGLWidgets REQUIRED)
 set(PROJECT_SOURCES
         CollabsibleBox.cpp
         CollabsibleBox.h
-        GuiManager.h
-        GuiManager.cpp
+
+
         InitialConditionsBox.cpp
         InitialConditionsBox.h
         main.cpp
@@ -38,6 +38,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Timeline.cpp
         TimelineRuler.h
         TimelineRuler.cpp
+        AddItemsBox.h
+        AddItemsBox.cpp
+        ItemPropertiesBox.h
+        ItemPropertiesBox.cpp
 
     )
 # Define target properties for Android with Qt 6 as:

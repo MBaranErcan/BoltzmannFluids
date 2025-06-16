@@ -3,6 +3,9 @@
 #include <QApplication>
 #include <QTimer>
 
+#include "Timeline.h"
+#include "TimelineRuler.h"
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -11,11 +14,12 @@ int main(int argc, char *argv[])
     w.show();
 
     auto timer = new QTimer();
-    int frame = 3000;
+    int frame = 0;
 
     QTimer::singleShot(0, &w, [&w, &timer, &frame]() {
-        timer->setInterval(1000 / 60);
+        timer->setInterval(1000 / 60*2);
         timer->start();
+
 
         QObject::connect(timer, &QTimer::timeout, [&w, &frame] {
             frame+= 1;
