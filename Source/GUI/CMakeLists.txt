@@ -15,8 +15,6 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets OpenGLWidgets REQUIRED)
 set(PROJECT_SOURCES
         CollabsibleBox.cpp
         CollabsibleBox.h
-
-
         InitialConditionsBox.cpp
         InitialConditionsBox.h
         main.cpp
@@ -24,13 +22,6 @@ set(PROJECT_SOURCES
         MainWindow.h
         MainWindow.ui
         UI_Config.h
-)
-
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(BoltzmannFluids_UI
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-        qt_resources/qt_resources.qrc
         Timeline.h
         Timeline.cpp
         LBMWrapper.h
@@ -42,6 +33,14 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         AddItemsBox.cpp
         ItemPropertiesBox.h
         ItemPropertiesBox.cpp
+)
+
+if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    qt_add_executable(BoltzmannFluids_UI
+        MANUAL_FINALIZATION
+        ${PROJECT_SOURCES}
+        qt_resources/qt_resources.qrc
+
 
     )
 # Define target properties for Android with Qt 6 as:

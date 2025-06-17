@@ -36,7 +36,12 @@ void AddableItemModel::set_items(const std::vector<AddableItem>& items) {
     endResetModel();
 }
 
-const AddableItem& AddableItemModel::item_at(int index) const {
+AddableItem& AddableItemModel::item_at(int index) {
+    if (index >= static_cast<int>(_items.size())) {
+        qDebug() << "(AddableItemModel::item_at) index is not valid for list";
+        return _items[static_cast<int>(_items.size())-1];
+    }
+
     return _items[index];
 }
 
@@ -47,12 +52,7 @@ AddItemsBox::AddItemsBox(QWidget *parent)
     auto main_layout = new QVBoxLayout(this);
     setLayout(main_layout);
 
-    _model = new AddableItemModel(this);
-    _items_list = new QListView(this);
-    _items_list->setSelectionMode(QAbstractItemView::SingleSelection);
-    main_layout->addWidget(_items_list);
-
-    {
+    {   // "Add - Delete" buttons
         auto button_layout = new QHBoxLayout;
         main_layout->addLayout(button_layout);
 
@@ -63,6 +63,22 @@ AddItemsBox::AddItemsBox(QWidget *parent)
         button_layout->addWidget(_delete_button);
     }
 
+    _model = new AddableItemModel(this);
+    _items_list = new QListView(this);
+    _items_list->setSelectionMode(QAbstractItemView::SingleSelection);
+    _items_list->setSelectionBehavior(QAbstractItemView::SelectRows);   // or SelectItems
+    main_layout->addWidget(_items_list);
+
+
+    // Default items
+    std::vector<AddableItem> items;
+
+    items.emplace_back("Cube", Type::CUBE, QIcon(":/icons/cube_icon.png"));
+    items.emplace_back("Sphere", Type::SPHERE, QIcon(":/icons/sphere_icon.png"));
+    items.emplace_back("Cylinder", Type::CYLINDER, QIcon(":/icons/cylinder_icon.png"));
+
+    _model->set_items(items);
+    _items_list->setModel(_model);
 
     connect(_add_button, &QPushButton::clicked, this, [this]() {
         QModelIndex index = _items_list->currentIndex();
@@ -76,27 +92,23 @@ AddItemsBox::AddItemsBox(QWidget *parent)
             emit delete_item_request(_model->item_at(index.row()));
     });
 
-    connect(_items_list->selectionModel(), &QItemSelectionModel::selectionChanged, this, [this]() {
-        bool has_selection = _items_list->currentIndex().isValid();
+    connect(_items_list->selectionModel(), &QItemSelectionModel::selectionChanged,
+            this, [this](const QItemSelection& selected, const QItemSelection& deselected)
+    {
+        bool has_selection = !selected.indexes().isEmpty();
         _add_button->setEnabled(has_selection);
         _delete_button->setEnabled(has_selection);
 
         if (has_selection) {
-            const auto& item = _model->item_at(_items_list->currentIndex().row());
-            emit item_selected(item);  // new signal
+            QModelIndex selected_index = selected.indexes().first();
+            qDebug() << "[AddItemsBox] emitting item_selected";
+            auto& item = _model->item_at(selected_index.row());
+            emit item_selected(item);
         } else {
+            qDebug() << "[AddItemsBox] emitting item_deselected";
             emit item_deselected();
         }
     });
 
 
-    // Default items
-    std::vector<AddableItem> items;
-
-    items.emplace_back("Cube", Type::CUBE, QIcon(":/icons/cube_icon.png"));
-    items.emplace_back("Sphere", Type::SPHERE, QIcon(":/icons/sphere_icon.png"));
-    items.emplace_back("Cylinder", Type::CYLINDER, QIcon(":/icons/cylinder_icon.png"));
-
-    _model->set_items(items);
-    _items_list->setModel(_model);
 }

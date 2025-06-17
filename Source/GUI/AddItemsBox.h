@@ -38,11 +38,10 @@ public:
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
     void set_items(const std::vector<AddableItem>& items);
-    const AddableItem& item_at(int index) const;
+    AddableItem& item_at(int index);
 
 private:
     std::vector<AddableItem> _items;
-
 
 };
 
@@ -57,7 +56,7 @@ signals:
     void add_item_request(const AddableItem& item);
     void delete_item_request(const AddableItem& item);
 
-    void item_selected(const AddableItem& item);
+    void item_selected(AddableItem& item);
     void item_deselected();
 
 private:

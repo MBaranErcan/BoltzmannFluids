@@ -255,16 +255,23 @@ MainWindow::MainWindow(QWidget *parent)
         );
 
     /// Item Properties Box
-        auto item_properties_box = new CollapsibleBox("Item Properties", scroll_content);
-        item_properties_box->add_widget(new ItemPropertiesBox(scroll_content));
-        scroll_layout->addWidget(item_properties_box);
+    auto item_properties_collapsible_box = new CollapsibleBox("Item Properties", scroll_content);
+    auto item_properties_box = new ItemPropertiesBox(scroll_content);
+    item_properties_collapsible_box->add_widget(item_properties_box);
+    scroll_layout->addWidget(item_properties_collapsible_box);
 
+    item_properties_collapsible_box->setStyleSheet(
+        "background-color: rgb(65, 66, 67);"
+        "border: 1px solid rgb(65, 66, 67);"
+        "border-radius: 5px;"
+        "padding: 1px;"
+        );
 
     /// Connect item_properties_box to add_items_box
-    //connect(add_items_box, &AddItemsBox::item_selected, item_properties_box, &ItemPropertiesBox::set_selected_item);
-    //connect(add_items_box, &AddItemsBox::item_deselected, item_properties_box, &ItemPropertiesBox::reset_selected_item);
-    connect(add_items_box, SIGNAL(item_selected(AddableItem)), item_properties_box, SLOT(set_selected_item(AddableItem)));
-    connect(add_items_box, SIGNAL(item_deselected(AddableItem)), item_properties_box, SLOT(set_deselected_item(AddableItem)));
+    QObject::connect(add_items_box, &AddItemsBox::item_deselected, item_properties_box, &ItemPropertiesBox::reset_selected_item);
+    QObject::connect(add_items_box, &AddItemsBox::item_selected, item_properties_box, &ItemPropertiesBox::set_selected_item);
+
+
 
     scroll_layout->addStretch();
 

@@ -49,10 +49,10 @@ private:
 
     bool _running = false;
 
-    int _frame_current          = 0;
-    int _frame_begin            = 0;
-    int _frame_end              = 10000;
-    int _frame_simulation_duration= 0;
+    int _frame_current  = 0;
+    int _frame_begin    = 0;
+    int _frame_end      = 10000;
+    int _frame_simulation_duration = 0;
 
 };
 

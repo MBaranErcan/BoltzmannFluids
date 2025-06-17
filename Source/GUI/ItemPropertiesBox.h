@@ -19,14 +19,14 @@ public:
 
 private:
     AddableItem* item;
-    QLineEdit* name;
-    Type* type;
-    QDoubleSpinBox* pos_x;
-    QDoubleSpinBox* pos_y;
-    QDoubleSpinBox* pos_z;
-    QDoubleSpinBox* size_x;
-    QDoubleSpinBox* size_y;
-    QDoubleSpinBox* size_z;
+    QLabel* name_label;
+    QLabel* type_label;
+    QDoubleSpinBox* position_X_box;
+    QDoubleSpinBox* position_Y_box;
+    QDoubleSpinBox* position_Z_box;
+    QDoubleSpinBox* size_X_box;
+    QDoubleSpinBox* size_Y_box;
+    QDoubleSpinBox* size_Z_box;
 
     QGroupBox* createInitialConditionsGroup();
 
